@@ -39,8 +39,7 @@ export default function UserList(){
 
     return (
         <>
-            <div style={{height: '90px'}}></div>
-            <div className="container mx-auto flex justify-center p-10 bg-white rounded-lg border border-slate-200">
+            <div className="container mx-auto mt-6 flex justify-center p-10 bg-white rounded-lg border border-slate-200">
                 <table className="table-auto w-full">
                     <thead>
                         <tr className="font-semibold text-sm rounded">
@@ -63,7 +62,7 @@ export default function UserList(){
                                 <td className="border-y px-4 py-2 border-slate-200">
                                     <img 
                                         className="size-10 transition-transform duration-1000 transform hover:scale-110 max-w-none mx-auto"
-                                        src={user.avatar}
+                                        src={`http://localhost:3000/${user.avatar}`}
                                     />
                                 </td>
                                 <td className="border-y px-4 py-2 border-slate-200">

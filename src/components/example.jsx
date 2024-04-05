@@ -49,8 +49,8 @@ export default function Example() {
   ];
 
   return (
-    <div className='mt-16'>
-      <div className='container grid grid-cols-6 gap-4 justify-center mx-auto py-9'>
+    <div className='mt-8'>
+      <div className='container grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 justify-center mx-auto'>
         {users.map((user) => (
           <Profile key={user.name} user={user} />
         ))}

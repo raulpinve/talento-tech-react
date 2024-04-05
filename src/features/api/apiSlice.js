@@ -4,10 +4,10 @@ export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3000',
-        prepareHeaders: (headers, {}) => {
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWZiODA4NzVkYjgxZWUyZjNhYTBhNWIiLCJlbWFpbCI6InJhdWwxM0Bjb3JyZW8uY29tIiwiaWF0IjoxNzEwOTgxMzM5LCJleHAiOjE3NDI1Mzg5Mzl9.O7aupiJjX9wleHkwzcnvSMKnbOuAL6gfrrq-5nZu2zg"
+        prepareHeaders: (headers, {getState}) => {
+            const token = getState().auth.token
             if(token){
-                headers.set('Authorization', `Bearer ${token}`)
+                headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
         }
@@ -22,7 +22,7 @@ export const apiSlice = createApi({
         }),
         getUserById: builder.query({
             query: (_id) => '/user/' + _id,
-            providesTags: ['User']
+            providesTags: ['Users']
         }),
         createUser: builder.mutation({
             query: (newUser) => ({
@@ -46,16 +46,32 @@ export const apiSlice = createApi({
                 method: "DELETE", 
             }), 
             invalidatesTags: ["Users"]
+        }), 
+        uploadAvatar: builder.mutation({
+            query: (body) => ({
+                url: `/upload/${body._id}/user`, 
+                method: "POST", 
+                body: body.file
+            }),
+            invalidatesTags: ["Users"]
+        }),
+        login: builder.mutation({
+            query: (body) => ({
+                url: '/login', 
+                method: 'POST', 
+                body: body
+            })
         })
     })    
 })
 
 /** Segun la nomenclatura de la libreria se usa use al principio 
  * y Query o Mutation al final segun corresponda */
-export const { 
-    useGetUsersQuery, 
+export const { useGetUsersQuery, 
     useGetUserByIdQuery, 
-    useCreateUserMutation,
+    useCreateUserMutation, 
     useUpdateUserMutation,
-    useDeleteUserMutation, 
+    useDeleteUserMutation,
+    useUploadAvatarMutation,
+    useLoginMutation
 } = apiSlice
